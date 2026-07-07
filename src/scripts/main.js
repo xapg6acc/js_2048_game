@@ -10,8 +10,6 @@ const msgLose = document.querySelector('.message-lose');
 const msgWin = document.querySelector('.message-win');
 const msgStart = document.querySelector('.message-start');
 
-let hasMoved = false;
-
 function updateUI() {
   scoreElement.textContent = game.getScore();
 
@@ -53,7 +51,7 @@ function updateUI() {
     }
   }
 
-  if (hasMoved) {
+  if (currentStatus !== 'idle') {
     button.textContent = 'Restart';
     button.classList.remove('start');
     button.classList.add('restart');
@@ -67,11 +65,9 @@ function updateUI() {
 button.addEventListener('click', () => {
   if (button.classList.contains('start')) {
     game.start();
-    hasMoved = false;
     updateUI();
   } else if (button.classList.contains('restart')) {
     game.restart();
-    hasMoved = false;
     updateUI();
   }
 });
@@ -107,7 +103,6 @@ document.addEventListener('keydown', (e) => {
   const boardAfter = JSON.stringify(game.getState());
 
   if (boardBefore !== boardAfter) {
-    hasMoved = true;
     updateUI();
   }
 });
