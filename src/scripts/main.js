@@ -20,11 +20,21 @@ function updateUI() {
     const c = index % 4;
     const val = board[r][c];
 
+    const prevText = cell.textContent;
+    const wasEmpty = !prevText || prevText === '';
+    const prevVal = wasEmpty ? 0 : parseInt(prevText, 10);
+
     cell.className = 'field-cell';
 
     if (val > 0) {
       cell.textContent = val;
       cell.classList.add(`field-cell--${val}`);
+
+      if (wasEmpty) {
+        cell.classList.add('field-cell--new');
+      } else if (prevVal !== val) {
+        cell.classList.add('field-cell--pop');
+      }
     } else {
       cell.textContent = '';
     }
